@@ -1,10 +1,26 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
+const tailwindcss = require('tailwindcss');
+
+const isProduction = EmberApp.env() === 'production';
 
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
     // Add options here
+    postcssOptions: {
+      compile: {
+        cacheInclude: [/.*\.(css|scss|hbs)$/, /.tailwind\.config\.js$/],
+        map: false,
+        plugins: [
+          tailwindcss('./tailwind.config.js'),
+          autoprefixer,
+          ...(isProduction ? [cssnano] : []),
+        ],
+      },
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
