@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   content: [
     './app/index.html',
@@ -5,7 +7,12 @@ module.exports = {
     './app/components/**/*.hbs',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        script: ['feltro-eroded', 'sans-serif'],
+        ...defaultTheme.fontFamily,
+      },
+    },
   },
   plugins: [],
 }

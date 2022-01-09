@@ -1,3 +1,6 @@
+/* Adobe Fonts - Put this on top */
+@import url("https://use.typekit.net/ybu5epn.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
