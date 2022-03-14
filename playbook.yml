@@ -1,0 +1,46 @@
+---
+- name: web application deploy
+  hosts: west
+  remote_user: hank
+  vars:
+    branch: "main"
+    homedir: "/home/{{ user }}"
+    org: ballPointPenguin
+    repo: authentic-self
+    user: hank
+    workdir: "{{ homedir }}/code/src/github.com/{{ org }}/{{ repo }}"
+  tasks:
+    - name: ensure workdir parent dir is present
+      file:
+        path: "{{ homedir }}/code/src/github.com/{{ org }}"
+        state: directory
+
+    - name: clone or update repo
+      git:
+        dest: "{{ workdir }}"
+        repo: "https://github.com/{{ org }}/{{ repo }}.git"
+        update: yes
+        version: "{{ branch }}"
+
+    - name: build docker image
+      docker_image:
+        force_source: yes
+        name: authentic-self
+        source: build
+        tag: latest
+        build:
+          path: "{{ workdir }}"
+          pull: yes
+
+    - name: run docker container
+      docker_container:
+        image: authentic-self:latest
+        name: authentic-self
+        restart_policy: always
+        expose:
+          - 80
+        env:
+          HSTS: "off"
+          LETSENCRYPT_HOST: "authentic.aliencyb.org"
+          PORT: "80"
+          VIRTUAL_HOST: "authentic.aliencyb.org"
