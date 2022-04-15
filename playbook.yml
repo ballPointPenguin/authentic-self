@@ -3,24 +3,24 @@
   hosts: west
   remote_user: hank
   vars:
-    branch: "main"
-    homedir: "/home/{{ user }}"
+    branch: 'main'
+    homedir: '/home/{{ user }}'
     org: ballPointPenguin
     repo: authentic-self
     user: hank
-    workdir: "{{ homedir }}/code/src/github.com/{{ org }}/{{ repo }}"
+    workdir: '{{ homedir }}/code/src/github.com/{{ org }}/{{ repo }}'
   tasks:
     - name: ensure workdir parent dir is present
       file:
-        path: "{{ homedir }}/code/src/github.com/{{ org }}"
+        path: '{{ homedir }}/code/src/github.com/{{ org }}'
         state: directory
 
     - name: clone or update repo
       git:
-        dest: "{{ workdir }}"
-        repo: "https://github.com/{{ org }}/{{ repo }}.git"
+        dest: '{{ workdir }}'
+        repo: 'https://github.com/{{ org }}/{{ repo }}.git'
         update: yes
-        version: "{{ branch }}"
+        version: '{{ branch }}'
 
     - name: build docker image
       docker_image:
@@ -29,7 +29,7 @@
         source: build
         tag: latest
         build:
-          path: "{{ workdir }}"
+          path: '{{ workdir }}'
           pull: yes
 
     - name: run docker container
@@ -40,7 +40,7 @@
         expose:
           - 80
         env:
-          HSTS: "off"
-          LETSENCRYPT_HOST: "authentic.aliencyb.org"
-          PORT: "80"
-          VIRTUAL_HOST: "authentic.aliencyb.org"
+          HSTS: 'off'
+          LETSENCRYPT_HOST: 'authentic.aliencyb.org'
+          PORT: '80'
+          VIRTUAL_HOST: 'authentic.aliencyb.org'

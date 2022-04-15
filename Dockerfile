@@ -6,7 +6,7 @@ WORKDIR /app/
 
 RUN apk update
 RUN apk add git
-RUN npm install -g --silent ember-cli
+RUN npm install -g ember-cli
 
 COPY package*.json ./
 RUN npm ci
