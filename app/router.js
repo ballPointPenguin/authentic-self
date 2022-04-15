@@ -10,4 +10,5 @@ Router.map(function () {
   this.route('home', { path: '/' })
   this.route('treatment')
   this.route('contact')
+  this.route('insurance')
 })
