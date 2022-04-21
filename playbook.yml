@@ -41,6 +41,6 @@
           - 80
         env:
           HSTS: 'off'
-          LETSENCRYPT_HOST: 'authentic.aliencyb.org'
+          LETSENCRYPT_HOST: 'ascounseling.org,www.ascounseling.org'
           PORT: '80'
-          VIRTUAL_HOST: 'authentic.aliencyb.org'
+          VIRTUAL_HOST: 'ascounseling.org,www.ascounseling.org'
